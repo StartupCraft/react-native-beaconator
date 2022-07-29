@@ -10,71 +10,44 @@ module.exports = {
     },
   },
   ignorePatterns: ['scripts', 'lib', 'docs', 'example'],
-  plugins: ['@typescript-eslint'],
-  extends: ['airbnb', 'airbnb/hooks', 'plugin:@typescript-eslint/recommended'],
+  plugins: ['@typescript-eslint', 'prettier'],
+  extends: ['airbnb', 'airbnb/hooks', 'prettier', 'plugin:@typescript-eslint/recommended'],
   rules: {
-    // eslint
-    semi: 'off',
-    curly: ['warn', 'multi-or-nest', 'consistent'],
-    'no-mixed-spaces-and-tabs': ['warn', 'smart-tabs'],
-    'no-async-promise-executor': 'warn',
-    'require-await': 'warn',
-    'no-return-await': 'warn',
-    'no-await-in-loop': 'warn',
-    'comma-dangle': 'off', // prettier already detects this
-    'no-restricted-syntax': [
-      'error',
-      {
-        selector: 'TSEnumDeclaration',
-        message: "Enums have various disadvantages, use TypeScript's union types instead.",
-      },
-    ],
-    // prettier
-    'prettier/prettier': ['warn'],
-    // typescript
-    '@typescript-eslint/no-use-before-define': 'off',
-    '@typescript-eslint/no-unused-vars': [
-      'error',
-      {
-        vars: 'all',
-        args: 'after-used',
-        ignoreRestSiblings: false,
-        varsIgnorePattern: '^_',
-        argsIgnorePattern: '^_',
-      },
-    ],
-    '@typescript-eslint/explicit-function-return-type': [
-      'warn',
-      {
-        allowExpressions: true,
-      },
-    ],
+    // -- Prettier
+    'prettier/prettier': 'error',
+    // -- TypeScript
+    '@typescript-eslint/camelcase': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-member-accessibility': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-extra-semi': 'off',
     '@typescript-eslint/no-namespace': 'off',
-    '@typescript-eslint/ban-ts-comment': 'off',
-    '@typescript-eslint/no-unsafe-assignment': 'error',
-    // react plugin
-    'react/no-unescaped-entities': 'off',
-    // react native plugin
-    'react-native/no-unused-styles': 'warn',
-    'react-native/split-platform-components': 'off',
-    'react-native/no-inline-styles': 'warn',
-    'react-native/no-color-literals': 'off',
-    'react-native/no-raw-text': 'off',
-    'react-native/no-single-element-style-arrays': 'warn',
-    '@typescript-eslint/strict-boolean-expressions': [
+    '@typescript-eslint/no-shadow': 'error',
+    '@typescript-eslint/no-unused-vars': 'warn',
+    // -- React
+    'react-hooks/exhaustive-deps': 'warn',
+    // -- JSX A11y
+    'jsx-a11y/anchor-is-valid': 'off',
+    // -- Import
+    'import/extensions': [
       'error',
+      'ignorePackages',
       {
-        allowString: false,
-        allowNullableObject: false,
-        allowNumber: false,
-        allowNullableBoolean: true,
+        js: 'never',
+        ts: 'never',
+        jsx: 'never',
+        tsx: 'never',
       },
     ],
-    '@typescript-eslint/no-non-null-assertion': 'error',
-    '@typescript-eslint/no-unnecessary-condition': 'error',
-
-    // react hooks
-    'react-hooks/exhaustive-deps': 'error',
+    'import/prefer-default-export': 'off',
+    // -- ESLint
+    'no-bitwise': 'off',
+    'no-plusplus': 'off',
+    'no-shadow': 'off',
+    'no-use-before-define': 'off',
+    'lines-between-class-members': 'off',
   },
   env: {
     node: true,

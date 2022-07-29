@@ -1,3 +1,4 @@
+/* eslint prefer-template:0 */
 import { NativeModules, Platform } from 'react-native';
 
 const LINKING_ERROR =
@@ -6,13 +7,15 @@ const LINKING_ERROR =
   '- You rebuilt the app after installing the package\n' +
   '- You are not using Expo managed workflow\n';
 
-const Beaconator = NativeModules.Beaconator  ? NativeModules.Beaconator  : new Proxy(
+const Beaconator = NativeModules.Beaconator
+  ? NativeModules.Beaconator
+  : new Proxy(
       {},
       {
         get() {
           throw new Error(LINKING_ERROR);
         },
-      }
+      },
     );
 
 export function multiply(a: number, b: number): Promise<number> {
