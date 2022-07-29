@@ -1,19 +1,11 @@
 # react-native-beaconator
-123
+
+The beacon detection library that actually detects.
+
 ## Installation
 
 ```sh
-npm install react-native-beaconator
-```
-
-## Usage
-
-```js
-import { multiply } from "react-native-beaconator";
-
-// ...
-
-const result = await multiply(3, 7);
+yarn add react-native-beaconator
 ```
 
 ## Contributing
@@ -23,7 +15,3 @@ See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the 
 ## License
 
 MIT
-
----
-
-Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)

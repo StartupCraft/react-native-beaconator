@@ -1,4 +1,4 @@
-package com.reactnativebeaconator;
+package io.startupcraft.beaconator;
 
 import androidx.annotation.NonNull;
 
