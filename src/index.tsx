@@ -7,8 +7,8 @@ const LINKING_ERROR =
   '- You rebuilt the app after installing the package\n' +
   '- You are not using Expo managed workflow\n';
 
-const Beaconator = NativeModules.Beaconator
-  ? NativeModules.Beaconator
+const Beaconator = NativeModules.BeaconatorModule
+  ? NativeModules.BeaconatorModule
   : new Proxy(
       {},
       {
