@@ -1,5 +1,5 @@
 {
-  "name": "react-native-beaconator",
+  "name": "@startupcraft/react-native-beaconator",
   "version": "0.1.0",
   "description": "The beacon detection library that actually detects.",
   "main": "lib/commonjs/index",
