@@ -1,6 +1,6 @@
 {
-  "name": "react-native-beaconator-example",
-  "description": "Example app for react-native-beaconator",
+  "name": "@startupcraft/react-native-beaconator-example",
+  "description": "Example app for @startupcraft/react-native-beaconator",
   "version": "0.0.1",
   "private": true,
   "scripts": {

@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   dependencies: {
-    'react-native-beaconator': {
+    '@startupcraft/react-native-beaconator': {
       root: path.join(__dirname, '..'),
     },
   },

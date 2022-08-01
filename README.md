@@ -1,11 +1,11 @@
-# react-native-beaconator
+# @startupcraft/react-native-beaconator
 
 The beacon detection library that actually detects.
 
 ## Installation
 
 ```sh
-yarn add react-native-beaconator
+yarn add @startupcraft/react-native-beaconator
 ```
 
 ## Contributing
