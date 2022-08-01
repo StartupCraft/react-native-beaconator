@@ -12,6 +12,32 @@ module.exports = {
   ignorePatterns: ['scripts', 'lib', 'docs', 'example'],
   plugins: ['@typescript-eslint', 'prettier'],
   extends: ['airbnb', 'airbnb/hooks', 'prettier', 'plugin:@typescript-eslint/recommended'],
+  settings: {
+    'import/resolver': {
+      node: {
+        moduleDirectory: ['node_modules', 'src'],
+        extensions: [
+          '.js',
+          '.jsx',
+          '.ts',
+          '.tsx',
+          '.d.ts',
+          '.android.js',
+          '.android.jsx',
+          '.android.ts',
+          '.android.tsx',
+          '.ios.js',
+          '.ios.jsx',
+          '.ios.ts',
+          '.ios.tsx',
+        ],
+      },
+    },
+    react: {
+      pragma: 'React',
+      version: 'detect',
+    },
+  },
   rules: {
     // -- Prettier
     'prettier/prettier': 'error',

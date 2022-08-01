@@ -30,18 +30,18 @@ import java.util.Map;
 
 @ReactModule(name = Constants.MODULE_NAME)
 public class BeaconatorModule extends ReactContextBaseJavaModule implements RangeNotifier {
-  private static ReactApplicationContext reactContext;
+  private static ReactApplicationContext reactAppContext;
   private Context applicationContext;
   private BeaconManager beaconManager;
 
-  public BeaconatorModule(ReactApplicationContext reactContext) {
-    super(reactContext);
-    this.reactContext = reactContext;
+  public BeaconatorModule(ReactApplicationContext reactAppContext) {
+    super(reactAppContext);
+    this.reactAppContext = reactAppContext;
   }
 
   @Override
   public void initialize() {
-    this.applicationContext = this.reactContext.getApplicationContext();
+    this.applicationContext = this.reactAppContext.getApplicationContext();
     this.beaconManager = BeaconManager.getInstanceForApplication(applicationContext);
 
     beaconManager.getBeaconParsers().clear();
@@ -49,8 +49,9 @@ public class BeaconatorModule extends ReactContextBaseJavaModule implements Rang
       new BeaconParser().setBeaconLayout(Constants.PARSER_IBEACON_LAYOUT)
     );
 
-    Log.d(Constants.TAG, "Setting up background range notifier");
     beaconManager.addRangeNotifier(this);
+    beaconManager.setEnableScheduledScanJobs(false);
+    beaconManager.setRegionStatePersistenceEnabled(false);
   }
 
   @Override
@@ -76,26 +77,26 @@ public class BeaconatorModule extends ReactContextBaseJavaModule implements Rang
    **********************************************************************************************/
   @ReactMethod
   public void startRanging(String regionId, String beaconUUID, Promise promise) {
-    Log.d(Constants.TAG, "startRanging, rangingRegionId: " + regionId + ", rangingBeaconUUID: " + beaconUUID);
+    Region region = createRegion(regionId, beaconUUID);
 
     try {
-      Region region = createRegion(regionId, beaconUUID);
       beaconManager.startRangingBeacons(region);
-      promise.resolve(true);
+      promise.resolve(null);
     } catch (Exception e) {
-      Log.e(Constants.TAG, "startRanging, error: ", e);
+      Log.e(Constants.TAG, "Unsuccessful start ranging, error: ", e);
       promise.reject(e);
     }
   }
 
   @ReactMethod
-  public void stopRanging(String regionId, String beaconUuid, Promise promise) {
-    Region region = createRegion(regionId, beaconUuid);
+  public void stopRanging(String regionId, String beaconUUID, Promise promise) {
+    Region region = createRegion(regionId, beaconUUID);
+
     try {
       beaconManager.stopRangingBeacons(region);
-      promise.resolve(true);
+      promise.resolve(null);
     } catch (Exception e) {
-      Log.e(Constants.TAG, "stopRanging, error: ", e);
+      Log.e(Constants.TAG, "Unsuccessful stop ranging, error: ", e);
       promise.reject(e);
     }
   }
@@ -111,11 +112,8 @@ public class BeaconatorModule extends ReactContextBaseJavaModule implements Rang
     beaconManager.requestStateForRegion(region);
   }
 
-
   @Override
   public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
-    Log.d(Constants.TAG, "rangingConsumer didRangeBeaconsInRegion, beacons: " + beacons.toString());
-    Log.d(Constants.TAG, "rangingConsumer didRangeBeaconsInRegion, region: " + region.toString());
     sendEvent("beaconsDidRange", createRangingResponse(beacons, region));
   }
 
@@ -164,7 +162,7 @@ public class BeaconatorModule extends ReactContextBaseJavaModule implements Rang
    **********************************************************************************************/
   private void sendEvent(String eventName,
                          @Nullable WritableMap params) {
-    reactContext
+    reactAppContext
       .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
       .emit(eventName, params);
   }
@@ -183,12 +181,4 @@ public class BeaconatorModule extends ReactContextBaseJavaModule implements Rang
       minor.length() > 0 ? Identifier.parse(minor) : null
     );
   }
-
-  // Example method
-  // See https://reactnative.dev/docs/native-modules-android
-  @ReactMethod
-  public void multiply(double a, double b, Promise promise) {
-    promise.resolve(a * b);
-  }
-
 }

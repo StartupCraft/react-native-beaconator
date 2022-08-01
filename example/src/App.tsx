@@ -1,31 +1,27 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
+import { DeviceEventEmitter } from 'react-native';
+import { startRangingBeacons, stopRangingBeacons } from 'react-native-beaconator';
 
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'react-native-beaconator';
+const region = {
+  identifier: 'Beaconator Region',
+};
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
+  useEffect(() => {
+    startRangingBeacons(region);
 
-  React.useEffect(() => {
-    multiply(3, 7).then(setResult);
+    return () => {
+      stopRangingBeacons(region);
+    };
   }, []);
 
-  return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-    </View>
-  );
-}
+  useEffect(() => {
+    const listener = DeviceEventEmitter.addListener('beaconsDidRange', (data) => console.log('didRange', data));
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
-  },
-});
+    return () => {
+      listener.remove();
+    };
+  }, []);
+
+  return null;
+}
